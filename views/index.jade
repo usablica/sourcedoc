@@ -1,0 +1,69 @@
+extends layout
+include mixins/message
+
+block content
+  .span10
+    .hero-unit
+      h1.hero-title Document your code, 
+        span continuously
+        .
+      p
+        | <b>SourceDoc</b> connects to your Github repository and automatically generate document from your code, after each commit. It's <b>Free</b> and <b>open-source</b>, no complex configuration is required.
+      p
+        a.btn.btn-primary.btn-large(href='/githubAuth') Login with Github »
+    .row-fluid
+      mixin message(msg)
+
+      .span4
+        h2 Heading
+        p
+          | Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.
+        p
+          a.btn(href='#') View details »
+      //
+        /span
+      .span4
+        h2 Heading
+        p
+          | Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.
+        p
+          a.btn(href='#') View details »
+      //
+        /span
+      .span4
+        h2 Heading
+        p
+          | Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.
+        p
+          a.btn(href='#') View details »
+      //
+        /span
+    //
+      /row
+    .row-fluid
+      .span4
+        h2 Heading
+        p
+          | Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.
+        p
+          a.btn(href='#') View details »
+      //
+        /span
+      .span4
+        h2 Heading
+        p
+          | Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.
+        p
+          a.btn(href='#') View details »
+      //
+        /span
+      .span4
+        h2 Heading
+        p
+          | Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.
+        p
+          a.btn(href='#') View details »
+      //
+        /span
+    //
+      /row

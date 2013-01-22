@@ -1,0 +1,8 @@
+.hero-unit .hero-title {
+	font-size: 45px;
+	margin-bottom: 25px;
+}
+.hero-unit .hero-title span {
+	color: gray;
+	font-weight: normal;
+}

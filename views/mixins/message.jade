@@ -1,0 +1,4 @@
+mixin message(msg)
+  if msg && msg.type && msg.text
+    div(class="alert alert-#{msg.type}")
+      =msg.text
