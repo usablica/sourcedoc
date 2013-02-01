@@ -1,7 +1,7 @@
 /*
  * Messaging functions
  */
-var messages = require("./messages.js").messages;
-exports._ = function(str) {
+exports.getMessage = function(str) {
+    var messages = require("./messages.js").messages;
 	return messages[str];
 };

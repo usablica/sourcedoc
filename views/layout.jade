@@ -41,8 +41,13 @@ html
           a.brand(href='/') SourceDoc
           .nav-collapse.collapse
             p.navbar-text.pull-right
-              | Logged in as
-              a.navbar-link(href='#') Username
+                if (typeof githubUsername !== "undefined") && githubUsername != ""
+                  img(src=githubUser.avatar_url, class='header-avatar img-rounded')
+                  a.navbar-link(href='/panel') #{__('Hey,')} #{githubUsername}!
+                  span  - 
+                  a.navbar-link(href='/logout') #{__('Logout')}
+                else
+                  a.navbar-link(href='/githubAuth') #{__('Login with Github')}
             ul.nav
               li.active
                 a(href='#') Home
@@ -58,10 +63,12 @@ html
           .well.sidebar-nav
             ul.nav.nav-list
               li.nav-header User
-              li(class=(page_name == 'register' || page_name == 'login' ? 'active' : ''))
-                a(href='/githubAuth') Register/Login
-              li(class=(page_name == 'panel' ? 'active' : ''))
-                a(href='/panel') Control Panel
+              if !isAuthenticated 
+                li
+                  a(href='/githubAuth') Register/Login
+              else 
+                li(class=(page_name == 'panel' ? 'active' : ''))
+                  a(href='/panel') Control Panel
               li
                 a(href='#') Link
               li.nav-header Sidebar
