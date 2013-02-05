@@ -1,16 +1,16 @@
 /**
  * Github authentication
  */
-var http = require("http");
-var Url = require("url");
-var querystring = require("querystring");
-
-var githubClient = require("github");
-var OAuth2 = require("oauth").OAuth2;
-
-var github = new githubClient({
-  version: "3.0.0"
-});
+var http = require("http"),
+  Url = require("url"),
+  querystring = require("querystring"),
+  githubClient = require("github"),
+  OAuth2 = require("oauth").OAuth2,
+  mongoose = require('mongoose'),
+  User = mongoose.model('User'),
+  github = new githubClient({
+    version: "3.0.0"
+  });
 
 //SourceDoc API key
 var clientId = "54b194272f2962b19ca9";
@@ -42,6 +42,26 @@ exports.authCallback = function (req, res) {
       res.cookie('githubAccessToken', access_token, {
         maxAge: 900000,
         httpOnly: true
+      });
+      //authenticate github API
+      github.authenticate({
+        type: "oauth",
+        token: access_token
+      });
+      github.user.get({}, function (err, user) {
+        //Save user to the DB
+        new User({
+          username: user.login,
+          url: user.html_url,
+          name: user.name,
+          github_id: user.id,
+          avatar_url: user.avatar_url,
+          location: user.location,
+          email: user.email,
+          blog: user.blog,
+          public_repos: user.public_repos,
+          public_gists: user.public_gists
+        }).save();
       });
       //redirect back
       res.writeHead(303, {

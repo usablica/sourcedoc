@@ -22,7 +22,8 @@ exports.panel = function (req, res) {
       res.render('panel', {
         title: __('User Panel'),
         msg: msg,
-        page_name: "panel"
+        page_name: "panel",
+        repos: repoObj
       });
     });
   } else {

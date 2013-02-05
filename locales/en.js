@@ -8,5 +8,6 @@
 	"User Panel": "User Panel",
 	"Hey,": "Hey,",
 	"Logout": "Logout",
-	"Login with Github »": "Login with Github »"
+	"Login with Github »": "Login with Github »",
+	"Login with Github": "Login with Github"
 }

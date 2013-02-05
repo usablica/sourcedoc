@@ -65,10 +65,14 @@ html
               li.nav-header User
               if !isAuthenticated 
                 li
-                  a(href='/githubAuth') Register/Login
+                  a(href='/githubAuth')
+                    i(class='icon-user')
+                    |  Register/Login
               else 
                 li(class=(page_name == 'panel' ? 'active' : ''))
-                  a(href='/panel') Control Panel
+                  a(href='/panel')
+                    i(class='icon-tasks')
+                    |  Control Panel
               li
                 a(href='#') Link
               li.nav-header Sidebar

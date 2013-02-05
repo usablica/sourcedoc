@@ -1,16 +1,13 @@
-
 /**
  * Module dependencies.
  */
-
-var express = require('express')
-  , routes = require('./routes')
-  , user = require('./routes/user')
-  , githubAuth = require('./routes/githubAuth')
-  , http = require('http')
-  , path = require('path')
-  , githubClient = require("github")
-  , i18n = require("i18n");
+var express = require('express'),
+    http = require('http'),
+    path = require('path'),
+    githubClient = require("github"),
+    i18n = require("i18n"),
+    fs = require('fs'),
+    mongoose = require('mongoose');
 
 var github = new githubClient({
     version: "3.0.0"
@@ -22,7 +19,19 @@ i18n.configure({
     register: global
 });
 
-var app = express();
+//DB connection
+mongoose.connect('mongodb://localhost/sourcedoc');
+//Load all models
+var models_path = __dirname + '/models';
+fs.readdirSync(models_path).forEach(function (file) {
+  require(models_path + '/' + file);
+});
+
+//Loading routes
+var routes = require('./routes'),
+    user = require('./routes/user'),
+    githubAuth = require('./routes/githubAuth'),
+    app = express();
 
 //Global variables
 app.locals({
@@ -42,30 +51,7 @@ app.configure(function() {
   app.use(i18n.init);
   app.use(express.static(path.join(__dirname, 'public')));
   //User authentication and more
-  app.use(function(req, res, next) {
-    //not authenticated
-    res.locals.isAuthenticated = false;
-    if(req.cookies != undefined && req.cookies["githubAccessToken"] && req.cookies["githubAccessToken"] != "") {
-      //authenticate github API
-      github.authenticate({
-          type: "oauth",
-          token: req.cookies["githubAccessToken"]
-      });
-
-      github.user.get({}, function(err, user) {
-        //OK, fine, you're authenticated
-        if(user && user.login) {
-          console.log(user);
-          res.locals.isAuthenticated = true;
-          res.locals.githubUsername = user.login;
-          res.locals.githubUser = user;
-        }
-        next();
-		  });
-    } else {
-      next();
-    }
-  });
+  app.use(require('./middlewares/authentication.js').authCheck);
   app.use(app.router);
 });
 
