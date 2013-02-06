@@ -38,11 +38,6 @@ exports.authCallback = function (req, res) {
         res.end(err + "");
         return;
       }
-      //set cookie to client
-      res.cookie('githubAccessToken', access_token, {
-        maxAge: 900000,
-        httpOnly: true
-      });
       //authenticate github API
       github.authenticate({
         type: "oauth",
@@ -50,7 +45,7 @@ exports.authCallback = function (req, res) {
       });
       github.user.get({}, function (err, user) {
         //Save user to the DB
-        new User({
+        var userObj = new User({
           username: user.login,
           url: user.html_url,
           name: user.name,
@@ -62,12 +57,15 @@ exports.authCallback = function (req, res) {
           public_repos: user.public_repos,
           public_gists: user.public_gists
         }).save();
+        //set user object to session
+        req.session.user = user;
+        req.session.user.access_token = access_token;
+        //redirect back
+        res.writeHead(303, {
+            Location: "/panel?msg=auth_success"
+        });
+        res.end();
       });
-      //redirect back
-      res.writeHead(303, {
-        Location: "/panel?msg=auth_success"
-      });
-      res.end();
     });
   } else {
     res.writeHead(500);

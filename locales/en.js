@@ -9,5 +9,7 @@
 	"Hey,": "Hey,",
 	"Logout": "Logout",
 	"Login with Github »": "Login with Github »",
-	"Login with Github": "Login with Github"
+	"Login with Github": "Login with Github",
+	"Oops! There's an problem with authenticating you, please refresh the page.": "Oops! There's an problem with authenticating you, please refresh the page.",
+	"Woho! There's no repositry here, try to sync it with your Github.": "Woho! There's no repositry here, try to sync it with your Github."
 }

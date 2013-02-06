@@ -48,6 +48,7 @@ app.configure(function() {
   app.use(express.bodyParser());
   app.use(express.methodOverride());
   app.use(express.cookieParser());
+  app.use(express.session({ secret: 'sourcedoc', expires: false }));
   app.use(i18n.init);
   app.use(express.static(path.join(__dirname, 'public')));
   //User authentication and more
@@ -65,9 +66,11 @@ app.get('/', routes.index);
 app.get('/githubAuth', githubAuth.auth);
 //Github authentication callback
 app.get('/githubAuthCallback', githubAuth.authCallback);
-//users panel
+//Sync repositories with Github
+app.get('/githubSync', user.githubSync);
+//Users panel
 app.get('/panel', user.panel);
-//logout from account
+//Logout from account
 app.get('/logout', user.logout);
 
 http.createServer(app).listen(app.get('port'), function() {
