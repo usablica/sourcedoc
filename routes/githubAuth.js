@@ -4,11 +4,11 @@
 var http = require("http"),
   Url = require("url"),
   querystring = require("querystring"),
-  githubClient = require("github"),
+  github_client = require("github"),
   OAuth2 = require("oauth").OAuth2,
   mongoose = require('mongoose'),
   User = mongoose.model('User'),
-  github = new githubClient({
+  github = new github_client({
     version: "3.0.0"
   });
 
@@ -59,7 +59,7 @@ exports.authCallback = function (req, res) {
         }).save();
         //set user object to session
         req.session.user = user;
-        req.session.user.access_token = access_token;
+        req.session.user.accessToken = access_token;
         //redirect back
         res.writeHead(303, {
             Location: "/panel?msg=auth_success"
