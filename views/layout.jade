@@ -47,7 +47,7 @@ html
                   span  - 
                   a.navbar-link(href='/logout') #{__('Logout')}
                 else
-                  a.navbar-link(href='/githubAuth') #{__('Login with Github')}
+                  a.navbar-link(href='/github_auth') #{__('Login with Github')}
             ul.nav
               li.active
                 a(href='#') Home
@@ -65,7 +65,7 @@ html
               li.nav-header User
               if !isAuthenticated 
                 li
-                  a(href='/githubAuth')
+                  a(href='/github_auth')
                     i(class='icon-user')
                     |  Register/Login
               else 

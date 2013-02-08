@@ -4,12 +4,12 @@
 var express = require('express'),
     http = require('http'),
     path = require('path'),
-    githubClient = require("github"),
+    github_client = require("github"),
     i18n = require("i18n"),
     fs = require('fs'),
     mongoose = require('mongoose');
 
-var github = new githubClient({
+var github = new github_client({
     version: "3.0.0"
 });
 
@@ -63,11 +63,11 @@ app.configure('development', function() {
 //Homepage
 app.get('/', routes.index);
 //Start Github authentication
-app.get('/githubAuth', githubAuth.auth);
+app.get('/github_auth', githubAuth.auth);
 //Github authentication callback
-app.get('/githubAuthCallback', githubAuth.authCallback);
+app.get('/github_auth_callback', githubAuth.authCallback);
 //Sync repositories with Github
-app.get('/githubSync', user.githubSync);
+app.get('/github_sync', user.githubSync);
 //Users panel
 app.get('/panel', user.panel);
 //Logout from account
