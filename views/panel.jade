@@ -7,12 +7,26 @@ block content
 
     .row-fluid
       .span10
-        h2 Choose Repository
+        h2 Manage Repositories
         if repos.length > 0
-          each item, i in repos
-            li= item.name
+          table.table.table-striped.table-bordered.table-hover
+            thead
+              tr
+                th= "Name"
+                th= "Language"
+                th= "Fork?"
+            each item, i in repos
+              tr
+                td
+                  a(href=item.html_url, target="_blank")= item.name
+                td
+                  span(class=item.language != null ? "label label-info" : "label", style="background-color: " + language_colors[item.language] + ";")= item.language != null ? item.language : __("Unknown")
+                td
+                  span(class=item.is_fork ? "label label-warning" : "label label-info")= item.is_fork ? __("Yes") : __("No")
+          
         else 
           p.text-error #{__('Woho! There\'s no repositry here, try to sync it with your Github.')} 
-          a.btn.btn-success(href='/github_sync')
+        
+        a.btn.btn-success(href='/github_sync')
             i.icon-refresh.icon-white
             |  Sync it.

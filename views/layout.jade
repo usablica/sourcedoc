@@ -41,9 +41,9 @@ html
           a.brand(href='/') SourceDoc
           .nav-collapse.collapse
             p.navbar-text.pull-right
-                if (typeof githubUsername !== "undefined") && githubUsername != ""
+                if isAuthenticated
                   img(src=githubUser.avatar_url, class='header-avatar img-rounded')
-                  a.navbar-link(href='/panel') #{__('Hey,')} #{githubUsername}!
+                  a.navbar-link(href='/panel') #{__('Hey,')} #{githubUser.login}!
                   span  - 
                   a.navbar-link(href='/logout') #{__('Logout')}
                 else

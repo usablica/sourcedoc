@@ -11,5 +11,10 @@
 	"Login with Github »": "Login with Github »",
 	"Login with Github": "Login with Github",
 	"Oops! There's an problem with authenticating you, please refresh the page.": "Oops! There's an problem with authenticating you, please refresh the page.",
-	"Woho! There's no repositry here, try to sync it with your Github.": "Woho! There's no repositry here, try to sync it with your Github."
+	"Woho! There's no repositry here, try to sync it with your Github.": "Woho! There's no repositry here, try to sync it with your Github.",
+	"Successfully synced with Github.": "Successfully synced with Github.",
+	"Oops! There's a problem with Github authentication, please try again.": "Oops! There's a problem with Github authentication, please try again.",
+	"Yes": "Yes",
+	"No": "No",
+	"Unknown": "Unknown"
 }

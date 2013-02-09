@@ -17,12 +17,20 @@ exports.panel = function (req, res) {
     var translated_message = messaging.getMessage(req.query.msg);
     if (translated_message) msg = translated_message;
   }
-  res.render('panel', {
-    title: __('User Panel'),
-    msg: msg,
-    page_name: "panel",
-    repos: []
-  });
+  
+  Repository.find({ "owner.id": req.session.user.id })
+            .sort('is_fork')
+            .exec(function(err, repos) {
+              console.log(req.session.user.id);
+              console.log(repos);
+              res.render('panel', {
+                title: __('User Panel'),
+                msg: msg,
+                page_name: "panel",
+                repos: repos,
+                language_colors: require("../util/language_colors.js").language_colors
+              });
+            });
 };
 /**
  * Logout from account
@@ -44,12 +52,17 @@ exports.githubSync = function (req, res) {
   github.repos.getFromUser({
     user: res.locals.githubUser.login
   }, function (err, repoObj) {
-
+    console.log(repoObj);
     for (var i = 0, arrLen = repoObj.length; i < arrLen; i++) {
       var objItem = repoObj[i];
       new Repository({
         github_id: objItem.id,
+        owner: {
+          id: objItem.owner.id,
+          username: objItem.owner.login
+        },
         name: objItem.name,
+        html_url: objItem.html_url,
         clone_url: objItem.clone_url,
         git_url: objItem.git_url,
         homepage: objItem.homepage,

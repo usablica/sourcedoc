@@ -33,9 +33,12 @@ exports.authCallback = function (req, res) {
   if (req.query.code && req.query.code != "") {
     //upgrade the code to an access token
     oauth.getOAuthAccessToken(req.query.code, {}, function (err, access_token, refresh_token) {
-      if (err) {
-        res.writeHead(500);
-        res.end(err + "");
+      if (err || access_token == null) {
+        //redirect back
+        res.writeHead(303, {
+            Location: "/?msg=auth_unknown_error"
+        });
+        res.end();
         return;
       }
       //authenticate github API
@@ -44,6 +47,14 @@ exports.authCallback = function (req, res) {
         token: access_token
       });
       github.user.get({}, function (err, user) {
+        if (err || access_token == null) {
+          //redirect back
+          res.writeHead(303, {
+            Location: "/?msg=auth_unknown_error"
+          });
+          res.end();
+          return;
+        }
         //Save user to the DB
         var userObj = new User({
           username: user.login,

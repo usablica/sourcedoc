@@ -5,8 +5,14 @@ var mongoose = require('mongoose'),
 
 var RepositorySchema = new Schema({
     github_id: { type: Number, unique: true, index: true },
+    owner: {
+      id: Number,
+      username: String
+    },
+    github_id: { type: Number, unique: true, index: true },
     name: { type: String },
     clone_url: { type: String },
+    html_url: { type: String },
     git_url: { type: String },
     homepage: { type: String },
     ssh_url: { type: String },
