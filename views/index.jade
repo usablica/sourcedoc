@@ -1,69 +1,46 @@
-extends layout
 include mixins/message
 
-block content
-  .span10
-    .hero-unit
-      h1.hero-title Document your code, 
-        span continuously
-        .
-      p
-        | <b>SourceDoc</b> connects to your Github repository and automatically generate document from your code, after each commit. It's <b>Free</b> and <b>open-source</b>, no complex configuration is required.
-      p
-        a.btn.btn-primary.btn-large(href='/github_auth') #{__('Login with Github »')}
-    .row-fluid
-      mixin message(msg)
+!!! 5
+html
+  head
+    meta(charset='utf-8')
+    title SourceDoc
+    meta(name='viewport', content='width=device-width, initial-scale=1.0')
+    meta(name='description', content='Document your code, continuously.')
+    meta(name='author', content='')
 
-      .span4
-        h2 Heading
+    link(href='http://fonts.googleapis.com/css?family=Titillium+Web:700,300,300italic', rel='stylesheet', type='text/css')
+    link(href='/css/welcome.css', rel='stylesheet', type='text/css')
+  head
+  body
+    #header
+      #logo
+      h1 SourceDoc
+      h2 Document your code, continuously.
+    #middle
+      .m
+        a.btn(href='/github_auth')
+          strong Connect to github  ►
+    #content
+      ul#nav
+        li.selected Home
+        li Documents
+        li Guide
+        li About
+        li FAQ
+      #desc
         p
-          | Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.
+          em
+            strong SourceDoc 
+          | connects to your Github repository and automatically generate document from your code, after each commit. 
         p
-          a.btn(href='#') View details »
-      //
-        /span
-      .span4
-        h2 Heading
-        p
-          | Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.
-        p
-          a.btn(href='#') View details »
-      //
-        /span
-      .span4
-        h2 Heading
-        p
-          | Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.
-        p
-          a.btn(href='#') View details »
-      //
-        /span
-    //
-      /row
-    .row-fluid
-      .span4
-        h2 Heading
-        p
-          | Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.
-        p
-          a.btn(href='#') View details »
-      //
-        /span
-      .span4
-        h2 Heading
-        p
-          | Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.
-        p
-          a.btn(href='#') View details »
-      //
-        /span
-      .span4
-        h2 Heading
-        p
-          | Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.
-        p
-          a.btn(href='#') View details »
-      //
-        /span
-    //
-      /row
+          | It's 
+          em Free 
+          | , 
+          em
+            a(href='#') open-source 
+          | and 
+          em no complex configuration 
+          | is required.
+    footer
+      | 2013 © usabli.ca
