@@ -4,7 +4,7 @@
  */
 exports.authCheck = function(req, res, next) {
   //a list of restricted places
-  var restricted_places = ["/panel", "/github_sync"];
+  var restricted_places = ["/panel", "/github_sync", "/active_sourcedoc"];
   //not authenticated
   res.locals.isAuthenticated = false;
   if (req.session.user != null) {

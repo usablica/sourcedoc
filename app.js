@@ -72,6 +72,8 @@ app.get('/github_sync', user.githubSync);
 app.get('/panel', user.panel);
 //Logout from account
 app.get('/logout', user.logout);
+//Active/de-active SourceDoc for repository
+app.post('/active_sourcedoc', user.activeSourceDoc);
 
 http.createServer(app).listen(app.get('port'), function() {
   console.log("SourceDoc server listening on port " + app.get('port'));

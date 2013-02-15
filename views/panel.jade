@@ -17,13 +17,13 @@ block content
         i.icon-refresh.icon-white
         |  Sync it.
     if repos.length > 0
-      table.table.table-striped.table-bordered.table-hover
+      table.table.table-striped.table-bordered.table-hover#repos-list
         thead
           tr
             th= __("Name")
             th= __("Language")
             th= __("Fork?")
-            th= __("Action(s)")
+            th= __("SourceDoc")
         each item, i in repos
           tr
             td
@@ -33,7 +33,9 @@ block content
             td
               span(class=item.is_fork ? "label label-warning" : "label label-info")= item.is_fork ? __("Yes") : __("No")
             td
-              button.btn.btn-small(data-toggle="button")= __("SourceDoc")
+              button(class="btn btn-small sourcedoc-toggle" + (item.sourcedoc_enable ? " active" : ""), data-toggle="button", onclick="javascript:activeSourceDoc.call(this, '" + item.github_id + "');", title=__("Enable/Disable SourceDoc"))= (item.sourcedoc_enable ? __("On") : __("Off"))
+              a.btn.btn-small(href=item.html_url + "/settings/hooks", target="_blank", title=__("Hook Setting"), style="margin-left: 5px;")
+                i.icon-wrench
 
       
     else 

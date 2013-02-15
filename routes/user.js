@@ -18,26 +18,30 @@ exports.panel = function (req, res) {
     var translated_message = messaging.getMessage(req.query.msg);
     if (translated_message) msg = translated_message;
   }
-  
-  Repository.find({ "owner.id": req.session.user.id })
-            .sort('is_fork')
-            .exec(function(errRepo, repos) {
-              User.find({ "github_id": req.session.user.id }).exec(function(errUser, user) {
-                if(errRepo || errUser || user.length < 1) {
-                  res.writeHead(500);
-                  res.end(__("Unexpected error while loading your information. Please re-try again."));
-                  return;
-                }
-                res.render('panel', {
-                  title: __('User Panel'),
-                  msg: msg,
-                  page_name: "panel",
-                  repos: repos,
-                  last_github_sync: user[0].last_github_sync,
-                  language_colors: require("../util/language_colors.js").language_colors
-                });
-              });
-            });
+
+  Repository.find({
+    "owner.id": req.session.user.id
+  })
+    .sort('is_fork')
+    .exec(function (errRepo, repos) {
+    User.find({
+      "github_id": req.session.user.id
+    }).exec(function (errUser, user) {
+      if (errRepo || errUser || user.length < 1) {
+        res.writeHead(500);
+        res.end(__("Unexpected error while loading your information. Please re-try again."));
+        return;
+      }
+      res.render('panel', {
+        title: __('User Panel'),
+        msg: msg,
+        page_name: "panel",
+        repos: repos,
+        last_github_sync: user[0].last_github_sync,
+        language_colors: require("../util/language_colors.js").language_colors
+      });
+    });
+  });
 };
 /**
  * Logout from account
@@ -79,10 +83,37 @@ exports.githubSync = function (req, res) {
       }).save();
     }
     //update user's last github sync time
-    //todo: we don't need this callback function but mongoose doesn't update the docuemnt when we don't bind the callback function
-    //this is my question on stackoverflow: http://stackoverflow.com/q/14877967/375966
-    User.findOneAndUpdate({ github_id: res.locals.githubUser.id }, { last_github_sync: new Date() }).exec();
+    User.findOneAndUpdate({
+      github_id: res.locals.githubUser.id
+    }, {
+      last_github_sync: new Date()
+    }).exec();
 
     res.redirect('/panel?msg=successfully_synced');
   });
+};
+
+/**
+ * Active or de-active SourceDoc for a repository
+ */
+exports.activeSourceDoc = function (req, res) {
+  if (req.body != null && req.body.github_id != null && req.body.active != null) {
+    Repository.findOneAndUpdate({
+      github_id: req.body.github_id,
+      "owner.id": res.locals.githubUser.id
+    }, {
+      sourcedoc_enable: (req.body.active == "true")
+    }).exec();
+    
+    res.writeHead(200);
+    res.end(JSON.stringify({
+      success: true
+    }));
+  } else {
+    res.writeHead(500);
+    res.end(JSON.stringify({
+      success: false,
+      message: __("Can't find required parameters.")
+    }));
+  }
 };

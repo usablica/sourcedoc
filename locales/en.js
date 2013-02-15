@@ -27,5 +27,11 @@
 	"Action(s)": "Action(s)",
 	"Last sync with Github: ": "Last sync with Github: ",
 	"Never.": "Never.",
-	"Unexpected error while loading your information. Please re-try again.": "Unexpected error while loading your information. Please re-try again."
+	"Unexpected error while loading your information. Please re-try again.": "Unexpected error while loading your information. Please re-try again.",
+	"SourceDoc Status": "SourceDoc Status",
+	"On": "On",
+	"Can't find required parameters.": "Can't find required parameters.",
+	"Off": "Off",
+	"Hook Setting": "Hook Setting",
+	"Enable/Disable SourceDoc": "Enable/Disable SourceDoc"
 }
