@@ -66,7 +66,8 @@ exports.authCallback = function (req, res) {
           email: user.email,
           blog: user.blog,
           public_repos: user.public_repos,
-          public_gists: user.public_gists
+          public_gists: user.public_gists,
+          last_github_sync: null
         }).save();
         //set user object to session
         req.session.user = user;

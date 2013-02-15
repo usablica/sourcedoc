@@ -16,5 +16,16 @@
 	"Oops! There's a problem with Github authentication, please try again.": "Oops! There's a problem with Github authentication, please try again.",
 	"Yes": "Yes",
 	"No": "No",
-	"Unknown": "Unknown"
+	"Unknown": "Unknown",
+	"Name": "Name",
+	"Language": "Language",
+	"Fork?": "Fork?",
+	"Action": "Action",
+	"Active SourceDoc": "Active SourceDoc",
+	"Enable SourceDoc": "Enable SourceDoc",
+	"SourceDoc": "SourceDoc",
+	"Action(s)": "Action(s)",
+	"Last sync with Github: ": "Last sync with Github: ",
+	"Never.": "Never.",
+	"Unexpected error while loading your information. Please re-try again.": "Unexpected error while loading your information. Please re-try again."
 }

@@ -19,6 +19,7 @@ var RepositorySchema = new Schema({
     language: { type: String },
     size: { type: Number },
     is_fork: { type: Boolean },
+    sourcedoc_enable: { type: Boolean, default: false },
     created_at: { type: Date, default: Date.now }
 });
 

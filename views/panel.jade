@@ -5,28 +5,36 @@ block content
   .span10
     mixin message(msg)
 
-    .row-fluid
-      .span10
-        h2 Manage Repositories
-        if repos.length > 0
-          table.table.table-striped.table-bordered.table-hover
-            thead
-              tr
-                th= "Name"
-                th= "Language"
-                th= "Fork?"
-            each item, i in repos
-              tr
-                td
-                  a(href=item.html_url, target="_blank")= item.name
-                td
-                  span(class=item.language != null ? "label label-info" : "label", style="background-color: " + language_colors[item.language] + ";")= item.language != null ? item.language : __("Unknown")
-                td
-                  span(class=item.is_fork ? "label label-warning" : "label label-info")= item.is_fork ? __("Yes") : __("No")
-          
-        else 
-          p.text-error #{__('Woho! There\'s no repositry here, try to sync it with your Github.')} 
-        
-        a.btn.btn-success(href='/github_sync')
-            i.icon-refresh.icon-white
-            |  Sync it.
+  .span10
+    h2 Manage Repositories
+    div.alert.alert-info=__("Last sync with Github: ")
+      if last_github_sync != null
+        b
+          = last_github_sync
+      else
+       = __("Never.")
+      a.btn.btn-success.btn-mini.pull-right(href='/github_sync')
+        i.icon-refresh.icon-white
+        |  Sync it.
+    if repos.length > 0
+      table.table.table-striped.table-bordered.table-hover
+        thead
+          tr
+            th= __("Name")
+            th= __("Language")
+            th= __("Fork?")
+            th= __("Action(s)")
+        each item, i in repos
+          tr
+            td
+              a(href=item.html_url, target="_blank")= item.name
+            td
+              span(class=item.language != null ? "label label-info" : "label", style="background-color: " + language_colors[item.language] + ";")= item.language != null ? item.language : __("Unknown")
+            td
+              span(class=item.is_fork ? "label label-warning" : "label label-info")= item.is_fork ? __("Yes") : __("No")
+            td
+              button.btn.btn-small(data-toggle="button")= __("SourceDoc")
+
+      
+    else 
+      p.text-error #{__('Woho! There\'s no repositry here, try to sync it with your Github.')} 

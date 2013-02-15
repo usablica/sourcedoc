@@ -74,5 +74,5 @@ app.get('/panel', user.panel);
 app.get('/logout', user.logout);
 
 http.createServer(app).listen(app.get('port'), function() {
-  console.log("Express server listening on port " + app.get('port'));
+  console.log("SourceDoc server listening on port " + app.get('port'));
 });
