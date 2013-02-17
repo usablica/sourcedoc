@@ -6,118 +6,57 @@ html
     meta(name='viewport', content='width=device-width, initial-scale=1.0')
     meta(name='description', content='')
     meta(name='author', content='')
+
     //
-       Le styles 
-    link(href='/css/bootstrap.css', rel='stylesheet')
-    link(href='/css/main.css', rel='stylesheet')
-    style(type='text/css')
-      body {
-      padding-top: 60px;
-      padding-bottom: 40px;
-      }
-      .sidebar-nav {
-      padding: 9px 0;
-      }
-    link(href='/css/bootstrap-responsive.css', rel='stylesheet')
+      |css
+    link(href='/css/panel.css', rel='stylesheet')
+    
     //
        HTML5 shim, for IE6-8 support of HTML5 elements 
     //if lt IE 9
       script(src='http://html5shim.googlecode.com/svn/trunk/html5.js')
     //
-       Fav and touch icons 
+      |Fav and touch icons 
     link(rel='apple-touch-icon-precomposed', sizes='144x144', href='../assets/ico/apple-touch-icon-144-precomposed.png')
     link(rel='apple-touch-icon-precomposed', sizes='114x114', href='../assets/ico/apple-touch-icon-114-precomposed.png')
     link(rel='apple-touch-icon-precomposed', sizes='72x72', href='../assets/ico/apple-touch-icon-72-precomposed.png')
     link(rel='apple-touch-icon-precomposed', href='../assets/ico/apple-touch-icon-57-precomposed.png')
     link(rel='shortcut icon', href='../assets/ico/favicon.png')
-  body
-    .navbar.navbar-inverse.navbar-fixed-top
-      .navbar-inner
-        .container-fluid
-          a.btn.btn-navbar(data-toggle='collapse', data-target='.nav-collapse')
-            span.icon-bar
-            span.icon-bar
-            span.icon-bar
-          a.brand(href='/') SourceDoc
-          .nav-collapse.collapse
-            p.navbar-text.pull-right
-                if isAuthenticated
-                  img(src=githubUser.avatar_url, class='header-avatar img-rounded')
-                  a.navbar-link(href='/panel') #{__('Hey,')} #{githubUser.login}!
-                  span  - 
-                  a.navbar-link(href='/logout') #{__('Logout')}
-                else
-                  a.navbar-link(href='/github_auth') #{__('Login with Github')}
-            ul.nav
-              li.active
-                a(href='#') Home
-              li
-                a(href='#about') About
-              li
-                a(href='#contact') Contact
-          //
-            /.nav-collapse 
-    .container-fluid
-      .row-fluid
-        .span2
-          .well.sidebar-nav
-            ul.nav.nav-list
-              li.nav-header User
-              if !isAuthenticated 
-                li
-                  a(href='/github_auth')
-                    i(class='icon-user')
-                    |  Register/Login
-              else 
-                li(class=(page_name == 'panel' ? 'active' : ''))
-                  a(href='/panel')
-                    i(class='icon-tasks')
-                    |  Control Panel
-              li
-                a(href='#') Link
-              li.nav-header Sidebar
-              li
-                a(href='#') Link
-              li
-                a(href='#') Link
-              li
-                a(href='#') Link
-              li
-                a(href='#') Link
-              li
-                a(href='#') Link
-              li
-                a(href='#') Link
-              li.nav-header Sidebar
-              li
-                a(href='#') Link
-              li
-                a(href='#') Link
-              li
-                a(href='#') Link
-          //
-            /.well 
-        //
-          /span
-        block content
 
-        //
-          /span
-      //
-        /row
-      hr
-      footer
-        p
-          © 
-          a(href='http://usabli.ca/') usabli.ca 
-          | 2013
+  body
+    header
+      #logo
+      ul#info
+        if isAuthenticated
+          li#profile-pic
+            img(src=githubUser.avatar_url, width='32px', height='32px')
+          li
+            a(href='/panel') #{__('Hey,')} #{githubUser.login}!
+          li &nbsp; - &nbsp; 
+          li
+            a(href='/logout') #{__('disconnect')}
+        else
+          li
+            a(href='/github_auth') #{__('Connect with Github')}
+    #panel
+      h2#panel-title panel
+      ul
+        li.selected
+          a(href='#') Home
+        li
+          a(href='#about') About
+        li
+          a(href='#contact') Contact
+
+    block content
+
+    footer 
+      a(href='http://usabli.ca/') usabli.ca 
+      | © 2013
+
     //
-      /.fluid-container
-    //
-       Le javascript
-           
-    //
-       Placed at the end of the document so the pages load faster 
+      |javascript (Placed at the end of the document so the pages load faster)
+
     script(src='http://code.jquery.com/jquery-latest.js')
     script(src='/js/bootstrap.min.js')
     script(src='/js/main.js')
