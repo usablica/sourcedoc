@@ -2,41 +2,53 @@ extends layout
 include mixins/message
 
 block content
-  .span10
+  #main
+    //
+      |page message
+
     mixin message(msg)
 
-  .span10
-    h2 Manage Repositories
-    div.alert.alert-info=__("Last sync with Github: ")
-      if last_github_sync != null
-        b
-          = last_github_sync
-      else
-       = __("Never.")
-      a.btn.btn-success.btn-mini.pull-right(href='/github_sync')
-        i.icon-refresh.icon-white
-        |  Sync it.
-    if repos.length > 0
-      table.table.table-striped.table-bordered.table-hover#repos-list
-        thead
-          tr
-            th= __("Name")
-            th= __("Language")
-            th= __("Fork?")
-            th= __("SourceDoc")
-        each item, i in repos
-          tr
-            td
-              a(href=item.html_url, target="_blank")= item.name
-            td
-              span(class=item.language != null ? "label label-info" : "label", style="background-color: " + language_colors[item.language] + ";")= item.language != null ? item.language : __("Unknown")
-            td
-              span(class=item.is_fork ? "label label-warning" : "label label-info")= item.is_fork ? __("Yes") : __("No")
-            td
-              button(class="btn btn-small sourcedoc-toggle" + (item.sourcedoc_enable ? " active" : ""), data-toggle="button", onclick="javascript:activeSourceDoc.call(this, '" + item.github_id + "');", title=__("Enable/Disable SourceDoc"))= (item.sourcedoc_enable ? __("On") : __("Off"))
-              a.btn.btn-small(href=item.html_url + "/settings/hooks", target="_blank", title=__("Hook Setting"), style="margin-left: 5px;")
-                i.icon-wrench
-
+    //
+      |page content
       
-    else 
-      p.text-error #{__('Woho! There\'s no repositry here, try to sync it with your Github.')} 
+    #content
+      .part-title
+        h1 Manage Repositories
+      .sync
+        span#sync-msg
+          | Last sync with github: 
+          span#sync-time
+            if last_github_sync != null
+              b
+                = last_github_sync
+            else
+              b
+                = __("Never.")
+        a.btn(href='/github_sync')
+          spnan.icon-refresh
+          | Sync Now
+      if repos.length > 0
+        table
+          thead
+            tr
+              th= __("Name")
+              th= __("Language")
+              th= __("Fork?")
+              th= __("SourceDoc")
+          tbody
+            each item, i in repos
+              tr
+                td
+                  a(href=item.html_url, target="_blank", class="bold")= item.name
+                td
+                  span(class="lang", style="color: " + language_colors[item.language] + ";")= item.language != null ? item.language : __("Unknown")
+                td
+                  span(class=item.is_fork ? "icon-ok" : "icon-remove")
+                td
+                  button(class="btn sourcedoc-toggle" + (item.sourcedoc_enable ? " active" : ""), data-toggle="button", onclick="javascript:activeSourceDoc.call(this, '" + item.github_id + "');", title=__("Enable/Disable SourceDoc"))
+                    span(class = item.sourcedoc_enable ? __("icon-ok") : __("icon-remove"))
+
+                  a.btn.btn-small(href=item.html_url + "/settings/hooks", target="_blank", title=__("Hook Setting"), style="margin-left: 5px;")
+                    i.icon-wrench
+      else 
+        p.text-error #{__('Woho! There\'s no repositry here, try to sync it with your Github.')} 
