@@ -1,46 +1,50 @@
 include mixins/message
 
-!!! 5
+doctype 5
 html
   head
     meta(charset='utf-8')
     title SourceDoc
     meta(name='viewport', content='width=device-width, initial-scale=1.0')
     meta(name='description', content='Document your code, continuously.')
-    meta(name='author', content='')
+    meta(name='author', content='usablica')
 
-    link(href='http://fonts.googleapis.com/css?family=Titillium+Web:700,300,300italic', rel='stylesheet', type='text/css')
     link(href='/css/welcome.css', rel='stylesheet', type='text/css')
   head
-  body
-    #header
+
+
+body
+  #header
       #logo
-      h1 SourceDoc
-      h2 Document your code, continuously.
+      #head-title
+        h1 SourceDoc
+        h2 Document your code, continuously
     #middle
-      .m
-        a.btn(href='/github_auth')
+      .midbar-mid
+        a.btn.mid(href='/github_auth')
           strong Connect to github  ►
-    #content
-      ul#nav
-        li.selected Home
-        li Documents
-        li Guide
-        li About
-        li FAQ
-      #desc
+      .desc(style='width: 400px;')
         p
-          em
-            strong SourceDoc 
-          | connects to your Github repository and automatically generate document from your code, after each commit. 
+          | SourceDoc connects to your Github repository and automatically generate document from your code, after each commit.
         p
-          | It's 
-          em Free 
-          | , 
-          em
-            a(href='https://github.com/usablica/sourcedoc') open-source 
-          | and 
-          em no complex configuration 
-          | is required.
+          | It's free,
+          a(href='https://github.com/usablica/sourcedoc') open-source
+          | and no complex configuration is required.
+    #recommendation
+      ul.shouts-list
+        li.shout
+          | Lorem ipsum dolor sit amet,
+          a(href='http://sourcedoc.org/') SourceDoc
+          | consectetur adipiscing elit. Sed laoreet orci sapien, sit amet placerat lectus.
+          span.shout-source
+            | —
+            a(href='https://twitter.com/ehsaniaa') @ehsaniaa
+        li.shout
+          | Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed laoreet orci sapien, sit amet placerat
+          a(href='http://sourcedoc.org/') SourceDoc
+          | lectus.
+          span.shout-source
+            | —
+            a(href='https://twitter.com/afshinmeh') @afshinmeh
     footer
-      | 2013 © usabli.ca
+      | © SourceDoc | usabli.ca
