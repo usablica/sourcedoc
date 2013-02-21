@@ -9,10 +9,10 @@ function activeSourceDoc(github_id) {
   var thisObj = $(this);
   var sendObj = { github_id: github_id };
   if(thisObj.hasClass("active")) {
-    $( "span",thisObj ).removeClass("icon-ok").addClass("icon-remove");
+    $( "span",thisObj ).removeClass("icon-ok").addClass("icon-empty");
     sendObj.active = false;
   } else {
-    $( "span",thisObj ).removeClass("icon-remove").addClass("icon-ok");
+    $( "span",thisObj ).removeClass("icon-empty").addClass("icon-ok");
     sendObj.active = true;
   }
 
@@ -24,10 +24,10 @@ function activeSourceDoc(github_id) {
     var resObj = JSON.parse(res.responseText);
     alert("Error: " + resObj.message || "Unexpected error.");
     if(sendObj.active) {
-      $( "span",thisObj ).removeClass("icon-ok").addClass("icon-remove");
+      $( "span",thisObj ).removeClass("icon-ok").addClass("icon-empty");
       thisObj.button("toggle");
     } else {
-      $( "span",thisObj ).removeClass("icon-remove").addClass("icon-ok");
+      $( "span",thisObj ).removeClass("icon-empty").addClass("icon-ok");
       thisObj.button("toggle");
     }
   });
