@@ -33,5 +33,12 @@
 	"Can't find required parameters.": "Can't find required parameters.",
 	"Off": "Off",
 	"Hook Setting": "Hook Setting",
-	"Enable/Disable SourceDoc": "Enable/Disable SourceDoc"
+	"Enable/Disable SourceDoc": "Enable/Disable SourceDoc",
+	"disconnect": "disconnect",
+	"icon-remove": "icon-remove",
+	"icon-ok": "icon-ok",
+	"icon-empty": "icon-empty",
+	"Generating document...": "Generating document...",
+	"Error while reading SourceDoc initial file from the repository.": "Error while reading SourceDoc initial file from the repository.",
+	"Document generated successfully.": "Document generated successfully."
 }

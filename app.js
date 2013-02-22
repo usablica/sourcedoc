@@ -19,8 +19,6 @@ i18n.configure({
     register: global
 });
 
-//DB connection
-mongoose.connect('mongodb://localhost/sourcedoc');
 //Load all models
 var models_path = __dirname + '/models';
 fs.readdirSync(models_path).forEach(function (file) {
@@ -30,7 +28,7 @@ fs.readdirSync(models_path).forEach(function (file) {
 //Loading routes
 var routes = require('./routes'),
     user = require('./routes/user'),
-    githubAuth = require('./routes/githubAuth'),
+    github = require('./routes/github'),
     app = express();
 
 //Global variables
@@ -38,6 +36,11 @@ app.locals({
   __: i18n.__,
   __n: i18n.__n
 });
+//set an global variable to hold all SourceDoc configs and use it in all parts of application
+GLOBAL.systemConfig = require(__dirname + '/config.js').systemConfigs;
+
+//DB connection
+mongoose.connect(systemConfig.mongoDbConnection);
 
 app.configure(function() {
   app.set('port', process.env.PORT || 3000);
@@ -63,9 +66,9 @@ app.configure('development', function() {
 //Homepage
 app.get('/', routes.index);
 //Start Github authentication
-app.get('/github_auth', githubAuth.auth);
+app.get('/github_auth', github.auth);
 //Github authentication callback
-app.get('/github_auth_callback', githubAuth.authCallback);
+app.get('/github_auth_callback', github.authCallback);
 //Sync repositories with Github
 app.get('/github_sync', user.githubSync);
 //Users panel
@@ -74,6 +77,8 @@ app.get('/panel', user.panel);
 app.get('/logout', user.logout);
 //Active/de-active SourceDoc for repository
 app.post('/active_sourcedoc', user.activeSourceDoc);
+//Receive and process Github Post-Receive hooks
+app.post('/github_hook', github.githubHook);
 
 http.createServer(app).listen(app.get('port'), function() {
   console.log("SourceDoc server listening on port " + app.get('port'));

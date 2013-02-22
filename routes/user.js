@@ -104,7 +104,7 @@ exports.activeSourceDoc = function (req, res) {
     }, {
       sourcedoc_enable: (req.body.active == "true")
     }).exec();
-    
+
     res.writeHead(200);
     res.end(JSON.stringify({
       success: true
