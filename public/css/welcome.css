@@ -14,9 +14,6 @@ body{
 	screen size with more than 960px res
 */
 @media all and (min-width: 960px){
-	#middle, #recommendation{
-		width: 960px;
-	}
 	#header{
 		margin: 9em auto;
 	}
@@ -43,10 +40,6 @@ body{
 	screen size with less than 960px res
 */
 @media all and (max-width: 959px){
-
-	#middle, #recommendation, .shout{
-		width: 100%;
-	}
 	#header{
 		margin: 7em auto;
 	}
@@ -65,6 +58,7 @@ body{
 		width: 50%;
 	}
 	.shout{
+		width: 100%;
 		width: auto;
 		margin-left: 20px;
 	}
@@ -73,9 +67,12 @@ body{
 	common component for all reses
 */
 @media all{
+	#middle, #recommendation{
+		width: 100%;
+	}
 	#header{
 		text-align: center;
-		color: #736357;
+		color: #555;
 		}
 		#logo{
 			color: transparent;
@@ -101,12 +98,11 @@ body{
 				}
 	#middle{
 		margin: 0 auto;
-		border-top: 1px solid rgb(185, 213, 98);
-		background-color: rgb(236, 240, 205);
+		border-top: 1px solid rgb(240, 240, 240);
+		background-color: rgb(250, 250, 250);
 		padding: 27px 0;
 		box-shadow: inset 0px 1px 3px #fff;
-		border-radius: 20px 20px 0px 0px;
-		border-bottom: 1px solid rgb(185, 213, 98);
+		border-bottom: 1px solid rgb(218, 218, 218);
 		background-image: url('/img/bg.png');
 		background-repeat: no-repeat;
 		}
@@ -118,11 +114,7 @@ body{
 		.desc{
 			margin: 0em auto;
 			color: #5d7357;
-			border: 1px solid rgb(243, 240, 202);
 			padding: 2em;
-			box-shadow: 0px 3px 3px #bbb;
-			border-radius: 14px;
-			background-color: rgb(250, 250, 250);
 		}
 		.desc > p{
 			font-size: 1.2em;
@@ -132,11 +124,10 @@ body{
 	#recommendation{
 		margin: 0em auto;
 		color: rgb(107, 107, 107);
-		background-color: rgb(241, 245, 211);
+		background-color: rgb(248, 248, 248);
 		padding: 26px 0;
 		box-shadow: inset 0px 1px 1px 0px #fff;
 		box-shadow: inset 0px 1px 1px 0px #fff, 0px 2px 1px #ddd;
-		border-radius: 0px 0px 20px 20px;
 	}
 		.shouts-list {
 			padding: 0;
@@ -172,6 +163,7 @@ body{
 	footer{
 		width: 50%;
 		margin: 4em auto;
+		padding: 10px;
 		text-align: center;
 		border-top: 1px solid #eee;
 		color: #ccc;
@@ -180,36 +172,41 @@ body{
 
 	.btn {
 		color: #ffffff;
-		text-shadow: 0 -1px 0 rgba(121, 100, 47, 0.44);
-		background-color: rgb(201, 161, 146);
+		text-shadow: 0 -1px 0 rgba(47, 100, 121, 0.44);
+		background-color: rgb(63, 153, 223);
 		border-radius: 5px;
 		padding: 20px;
 		display: block;
-		box-shadow: inset 0px 0px 1px 1px rgb(245, 206, 184), 0px 1px 2px rgb(201, 187, 152);
-		border: 1px solid rgb(162, 156, 129);
+		box-shadow: 0px 3px 3px rgb(37, 73, 100);
+		border: 0px;
 	}
 	.btn:hover{
 		color: #fff;
 		text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.1);
-	  	background-color: rgb(221, 152, 126);
+	  	background-color: rgb(77, 177, 255);
+	  	box-shadow: 0px 2px 2px rgb(37, 73, 100);
+	  	border: 0px;
 	}
 	.btn:active{
 		color: #fff;
 		text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.1);
-	  	background-color: rgb(175, 105, 79);
+	  	background-color: rgb(60, 140, 200);
+	  	box-shadow: inset 0px 3px 6px rgb(37, 73, 100);
+	  	border: 0px;
 	}
 	a{
 		text-decoration: none;
-		color: rgb(255, 51, 0);
-		border-bottom: 1px solid rgb(243, 152, 152);
+		color: rgb(85, 174, 216);
+		border-bottom: 1px solid rgb(152, 214, 243);
+		padding-bottom: 1px;
 	}
 	a:hover{
 		color: #333;
-		background-color: rgb(255, 246, 211);
-		border-bottom: 1px solid transparent;
+		background-color: rgb(211, 237, 255);
 	}
 	a:active{
 		color: #333;
 		background-color: transparent;
+		border-bottom: 1px solid transparent;
 	}
 }
