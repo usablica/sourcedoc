@@ -40,5 +40,9 @@
 	"icon-empty": "icon-empty",
 	"Generating document...": "Generating document...",
 	"Error while reading SourceDoc initial file from the repository.": "Error while reading SourceDoc initial file from the repository.",
-	"Document generated successfully.": "Document generated successfully."
+	"Document generated successfully.": "Document generated successfully.",
+	"No such repository.": "No such repository.",
+	"Manage Repositories": "Manage Repositories",
+	"Last sync with github:": "Last sync with github:",
+	"Sync Now": "Sync Now"
 }

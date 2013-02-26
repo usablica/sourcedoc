@@ -2,8 +2,11 @@
  * SourceDoc basic configuration
  */
 exports.systemConfigs = {
+  //repositories path
   "reposPath": "repos/",
+  //initial SourceDoc file, for reading document generator config and more...
   "sourceDocInitFile": ".sourcedoc.yml",
+  //MongoDB connection config
   "mongoDbConnection": "mongodb://localhost/sourcedoc",
   //{0} for username, {1} for project name and {2} for revision number (e.g. docs/afshinm/persianjs/2)
   "docsOutput": "docs/{0}/{1}/{2}",

@@ -13,10 +13,10 @@ block content
       
     #content
       .part-title
-        h1 Manage Repositories
+        h1= __("Manage Repositories")
       .sync
         span#sync-msg
-          | Last sync with github: 
+          = __("Last sync with github:") + " "
           span#sync-time
             if last_github_sync != null
               b
@@ -26,7 +26,7 @@ block content
                 = __("Never.")
         a.btn(href='/github_sync')
           spnan.icon-refresh
-          | Sync Now
+          = __("Sync Now")
       if repos.length > 0
         table
           thead
@@ -39,9 +39,9 @@ block content
             each item, i in repos
               tr
                 td
-                  a(href=item.html_url, target="_blank", class="bold")= item.name
+                  a(href=item.html_url, target="_blank")= item.name
                 td
-                  span(class="lang", style="color: " + language_colors[item.language] + ";")= item.language != null ? item.language : __("Unknown")
+                  span(class="lang", style="background-color: " + language_colors[item.language] + ";", class="language-label")= item.language != null ? item.language : __("Unknown")
                 td
                   span(class=item.is_fork ? "icon-ok" : "icon-remove")
                 td

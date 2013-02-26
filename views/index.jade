@@ -18,18 +18,23 @@ body
       #logo
       #head-title
         h1 SourceDoc
-        h2 Document your code, continuously
+        h2 Document your code, 
+          b continuously
+          | .
     #middle
       .midbar-mid
         a.btn.mid(href='/github_auth')
-          strong Connect to github  ►
-      .desc(style='width: 400px;')
+          strong Sign-in with Github  ►
+      .desc
         p
-          | SourceDoc connects to your Github repository and automatically generate document from your code, after each commit.
-        p
-          | It's free,
-          a(href='https://github.com/usablica/sourcedoc') open-source
-          | and no complex configuration is required.
+          b SourceDoc 
+          | connects to your Github repository and automatically generate document from your code, after each commit.
+        p.small-desc
+          | It's 
+          b free, 
+          b 
+            a(href='https://github.com/usablica/sourcedoc') open-source
+          |  and no complex configuration is required.
     #recommendation
       ul.shouts-list
         li.shout
@@ -47,4 +52,6 @@ body
             | —
             a(href='https://twitter.com/afshinmeh') @afshinmeh
     footer
-      | © SourceDoc | usabli.ca
+      | with <3 in 
+      a(href='http://usabli.ca')
+        | usabli.ca

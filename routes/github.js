@@ -116,7 +116,7 @@ exports.githubHook = function (req, res) {
             var reposPath = systemConfig.reposPath + repoObj.owner.username + "/" + repoObj.name;
             //determine next revision number
             var nextRevisionNumber = 1;
-            if(lastRevisionDoc) {
+            if(lastRevisionDoc && lastRevisionDoc.revision) {
               nextRevisionNumber = lastRevisionDoc.revision + 1;
             }
             //Used for storing document generator command output
@@ -174,53 +174,29 @@ exports.githubHook = function (req, res) {
                                   commandOutput += data;
                                 });
                                 generateDocCommand.on('exit', function (docGenerateCode) {
-                                  console.log(engineObj.command);
-                                  console.log(commandArgs);
-                                  console.log(docGenerateCode);
                                   if (docGenerateCode === 0) {
                                     //everything is good, document generated
-                                    Revision.findOneAndUpdate({
-                                      _id: revisionDoc._id
-                                    }, {
-                                      $set: {
-                                        status: __("Document generated successfully."),
-                                        in_progress: false,
-                                        success: true
-                                      }
-                                    }).exec();
+                                    revisionDoc.status = __("Document generated successfully.");
+                                    revisionDoc.in_progress = false;
+                                    revisionDoc.success = true;
+                                    revisionDoc.save();
                                   } else {
-                                    Revision.findOneAndUpdate({
-                                      _id: revisionDoc._id
-                                    }, {
-                                      $set: {
-                                        status: commandOutput,
-                                        in_progress: false
-                                      }
-                                    }).exec();
+                                    revisionDoc.status = commandOutput;
+                                    revisionDoc.in_progress = false;
+                                    revisionDoc.save();
                                   }
                                 });
                               }
                             } else {
-                              Revision.findOneAndUpdate({
-                                _id: revisionDoc._id
-                              }, {
-                                $set: {
-                                  status: __("SourceDoc initial file is not valid."),
-                                  in_progress: false
-                                }
-                              }).exec();
+                              revisionDoc.status = __("SourceDoc initial file is not valid.");
+                              revisionDoc.in_progress = false;
+                              revisionDoc.save();
                             }
                           });
                         } else {
-                          console.log(err);
-                          Revision.findOneAndUpdate({
-                            _id: revisionDoc._id
-                          }, {
-                            $set: {
-                              status: __("Error while reading SourceDoc initial file from the repository."),
-                              in_progress: false
-                            }
-                          }).exec();
+                          revisionDoc.status = __("Error while reading SourceDoc initial file from the repository.");
+                          revisionDoc.in_progress = false;
+                          revisionDoc.save();
                         }
                       });
                     }

@@ -26,9 +26,10 @@ fs.readdirSync(models_path).forEach(function (file) {
 });
 
 //Loading routes
-var routes = require('./routes'),
-    user = require('./routes/user'),
-    github = require('./routes/github'),
+var indexRoute = require('./routes/index'),
+    userRoute = require('./routes/user'),
+    githubRoute = require('./routes/github'),
+    documentRoute = require('./routes/document'),
     app = express();
 
 //Global variables
@@ -64,22 +65,25 @@ app.configure('development', function() {
 });
 
 //Homepage
-app.get('/', routes.index);
+app.get('/', indexRoute.index);
 //Start Github authentication
-app.get('/github_auth', github.auth);
+app.get('/github_auth', githubRoute.auth);
 //Github authentication callback
-app.get('/github_auth_callback', github.authCallback);
+app.get('/github_auth_callback', githubRoute.authCallback);
 //Sync repositories with Github
-app.get('/github_sync', user.githubSync);
+app.get('/github_sync', userRoute.githubSync);
 //Users panel
-app.get('/panel', user.panel);
+app.get('/panel', userRoute.panel);
 //Logout from account
-app.get('/logout', user.logout);
+app.get('/logout', userRoute.logout);
 //Active/de-active SourceDoc for repository
-app.post('/active_sourcedoc', user.activeSourceDoc);
+app.post('/active_sourcedoc', userRoute.activeSourceDoc);
 //Receive and process Github Post-Receive hooks
-app.post('/github_hook', github.githubHook);
+app.post('/github_hook', githubRoute.githubHook);
+//Documents route
+app.get('/:username/:repo', documentRoute.getDocument);
 
+//Start the SourceDoc
 http.createServer(app).listen(app.get('port'), function() {
   console.log("SourceDoc server listening on port " + app.get('port'));
 });
