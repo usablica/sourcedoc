@@ -44,5 +44,7 @@
 	"No such repository.": "No such repository.",
 	"Manage Repositories": "Manage Repositories",
 	"Last sync with github:": "Last sync with github:",
-	"Sync Now": "Sync Now"
+	"Sync Now": "Sync Now",
+	"icon-exclamation-sign": "icon-exclamation-sign",
+	"icon-ok-sign": "icon-ok-sign"
 }
