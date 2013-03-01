@@ -81,7 +81,7 @@ app.post('/active_sourcedoc', userRoute.activeSourceDoc);
 //Receive and process Github Post-Receive hooks
 app.post('/github_hook', githubRoute.githubHook);
 //Documents route
-app.get('/:username/:repo', documentRoute.getDocument);
+app.get('/:username/:repo/:revision?/*', documentRoute.getDocument);
 
 //Start the SourceDoc
 http.createServer(app).listen(app.get('port'), function() {
