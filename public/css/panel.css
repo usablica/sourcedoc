@@ -117,7 +117,6 @@ body {
         font-weight: 100;
         color: #ddd;
         font-size: 2em;
-        text-shadow: 0px 1px 0px gray;
     }
 
     #panel > ul > li {
@@ -147,6 +146,19 @@ body {
     #main {;
     }
 
+    .revision-number {
+      margin-left: 4px;
+    }
+    .revision-number.revision-warning {
+      color: #e88f19;
+    }
+    .revision-number.revision-error {
+      color: #cb0a0a;
+      font-weight: bold;
+    }
+    .revision-number.revision-success {
+      color: #4dc013;
+    }
     .alert {
         border-radius: 5px;
         font-weight: bold;
@@ -403,4 +415,9 @@ body {
     .icon-exclamation-sign {
       background-position: 0 -120px;
     }
+    
+    .icon-warning-sign {
+      background-position: -144px -120px;
+    }
+    
 }

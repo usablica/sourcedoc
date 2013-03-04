@@ -33,6 +33,7 @@ block content
             tr
               th= __("Name")
               th= __("Language")
+              th= __("Revision")
               th= __("Fork?")
               th= __("SourceDoc")
           tbody
@@ -42,6 +43,10 @@ block content
                   a(href=item.html_url, target="_blank")= item.name
                 td
                   span(class="lang", style="background-color: " + language_colors[item.language] + ";", class="language-label")= item.language != null ? item.language : __("Unknown")
+                td
+                  span(class=(repoRevisions[item.github_id].in_progess ? "icon-refresh" : (repoRevisions[item.github_id].success ? "icon-ok" : (repoRevisions[item.github_id].revision == 0 ? "icon-warning-sign" : "icon-remove"))))
+                  span(class="revision-number " + (repoRevisions[item.github_id].in_progess ? "revision-warning" : (repoRevisions[item.github_id].success ? "revision-success" : (repoRevisions[item.github_id].revision == 0 ? "revision-warning" : "revision-error"))))
+                    =repoRevisions[item.github_id].revision
                 td
                   span(class=item.is_fork ? "icon-ok" : "icon-remove")
                 td

@@ -1,6 +1,4 @@
 {
-	"Hello": "Hello",
-	"Hello dddd": "Hello shalgham",
 	"SourceDoc | Document your code, continuously.": "SourceDoc | Document your code, continuously.",
 	"Successfully authenticated. Let's go.": "Successfully authenticated. Let's go.",
 	"Oops! An internal problem occurred. Please try again.": "Oops! An internal problem occurred. Please try again.",
@@ -45,6 +43,5 @@
 	"Manage Repositories": "Manage Repositories",
 	"Last sync with github:": "Last sync with github:",
 	"Sync Now": "Sync Now",
-	"icon-exclamation-sign": "icon-exclamation-sign",
-	"icon-ok-sign": "icon-ok-sign"
+	"Revision": "Revision"
 }

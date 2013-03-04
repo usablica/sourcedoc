@@ -11,11 +11,13 @@ exports.getDocument = function (req, res) {
   var repoName = req.params.repo,
     username = req.params.username,
     revision = req.params.revision;
+
   Repository.findOne({
     "owner.username": username,
     "name": repoName,
     sourcedoc_enable: true
   }, "github_id owner.username name", function (err, repo) {
+
     if (!err) {
       if (repo) {
         //get the last revision of document
@@ -33,10 +35,12 @@ exports.getDocument = function (req, res) {
             })
             .pipe(res);
         });
+
       } else {
         res.writeHead(404);
         res.end(__("No such repository."));
       }
+
     } else {
       res.writeHead(500);
       res.end(__("An internal problem occurred while loading document, please try again."));

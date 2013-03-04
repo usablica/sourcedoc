@@ -5,6 +5,7 @@ var messaging = require("../util/message/core"),
   github_client = require("github"),
   mongoose = require('mongoose'),
   Repository = mongoose.model('Repository'),
+  Revision = mongoose.model('Revision'),
   User = mongoose.model('User'),
   github = new github_client({
     version: "3.0.0"
@@ -32,14 +33,50 @@ exports.panel = function (req, res) {
         res.end(__("Unexpected error while loading your information. Please re-try again."));
         return;
       }
-      res.render('panel', {
-        title: __('User Panel'),
-        msg: msg,
-        page_name: "panel",
-        repos: repos,
-        last_github_sync: user[0].last_github_sync,
-        language_colors: require("../util/language_colors.js").language_colors
-      });
+
+      //To collect repositories revision
+      var repoRevisions = {};
+
+      for (var i = 0, reposLen = repos.length; i < reposLen; i++) {
+        //Add/Join Revision data to the Repository model
+        (function (currentRepo) {
+          Revision.findOne({
+            "repository.github_id": currentRepo.github_id
+          }).sort('-created_at')
+            .exec(function (errLastRevision, lastRevisionDoc) {
+            if (errLastRevision) {
+              res.writeHead(500);
+              res.end(__("Unexpected error while loading your information. Please re-try again."));
+              return;
+            }
+            if (lastRevisionDoc) {
+              repoRevisions[currentRepo.github_id] = ({
+                revision: lastRevisionDoc.revision,
+                success: lastRevisionDoc.success,
+                in_progress: lastRevisionDoc.in_progress
+              });
+            } else {
+              repoRevisions[currentRepo.github_id] = {
+                revision: 0,
+                success: false,
+                in_progress: false
+              };
+            }
+            //Sorry guys for this condition, I wrote that to know WHEN the Mongoose callback completed to render the page
+            if (Object.keys(repoRevisions).length == repos.length) {
+              res.render('panel', {
+                title: __('User Panel'),
+                msg: msg,
+                page_name: "panel",
+                repoRevisions: repoRevisions,
+                repos: repos,
+                last_github_sync: user[0].last_github_sync,
+                language_colors: require("../util/language_colors.js").language_colors
+              });
+            }
+          });
+        })(repos[i]);
+      }
     });
   });
 };
