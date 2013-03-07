@@ -1,5 +1,5 @@
-/*
- * Document routes
+/**
+ * Document Controller
  */
 var mongoose = require('mongoose'),
   Revision = mongoose.model('Revision'),
@@ -9,14 +9,14 @@ var mongoose = require('mongoose'),
 
 exports.getDocument = function (req, res) {
   var repoName = req.params.repo,
-    username = req.params.username,
-    revision = req.params.revision;
+      username = req.params.username,
+      revision = req.params.revision;
 
   Repository.findOne({
     "owner.username": username,
     "name": repoName,
     sourcedoc_enable: true
-  }, "github_id owner.username name", function (err, repo) {
+  }, "github_id", function (err, repo) {
 
     if (!err) {
       if (repo) {
@@ -25,6 +25,16 @@ exports.getDocument = function (req, res) {
           "repository.github_id": repo.github_id
         }).sort('-created_at')
           .exec(function (errLastRevision, lastRevisionDoc) {
+          if(errLastRevision) {
+            res.writeHead(500);
+            res.end(__("An internal problem occurred while loading repository revisions, please try again."));
+            return;
+          }
+          if(!lastRevisionDoc) {
+            res.writeHead(404);
+            res.end(__("No revision found for this repository."));
+            return;
+          }
           //I used `send` module to map the docs folder with the given url and parameters.
           //I'm not sure can I do this job with Express itself or not, so I used `send` module for now.
           send(req, req._parsedUrl.pathname + (revision != null ? "" : lastRevisionDoc.revision))

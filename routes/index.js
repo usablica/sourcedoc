@@ -1,5 +1,5 @@
 /*
- * GET home page.
+ * Main Controller
  */
 
 var messaging = require("../util/message/core");

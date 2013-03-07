@@ -39,14 +39,14 @@ html
           li
             a(href='/github_auth') #{__('Connect with Github')}
     #panel
-      h2#panel-title panel
+      h2#panel-title= __('menu')
       ul
         li.selected
-          a(href='#') Home
+          a(href='#')= __('Home')
         li
-          a(href='#about') About
+          a(href='#about')= __('About')
         li
-          a(href='#contact') Contact
+          a(href='#contact')= __('Contact')
 
     block content
 
@@ -61,3 +61,4 @@ html
     script(src='http://code.jquery.com/jquery-latest.js')
     script(src='/js/bootstrap.min.js')
     script(src='/js/main.js')
+    script(src='/js/moment.min.js')

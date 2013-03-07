@@ -1,5 +1,5 @@
 /*
- * GET users listing.
+ * Users Controller
  */
 var messaging = require("../util/message/core"),
   github_client = require("github"),
@@ -10,6 +10,7 @@ var messaging = require("../util/message/core"),
   github = new github_client({
     version: "3.0.0"
   });
+
 /**
  * Users main panel
  */
@@ -68,6 +69,7 @@ exports.panel = function (req, res) {
                 title: __('User Panel'),
                 msg: msg,
                 page_name: "panel",
+                moment: require("moment"),
                 repoRevisions: repoRevisions,
                 repos: repos,
                 last_github_sync: user[0].last_github_sync,
@@ -80,6 +82,7 @@ exports.panel = function (req, res) {
     });
   });
 };
+
 /**
  * Logout from account
  */
@@ -88,6 +91,7 @@ exports.logout = function (req, res) {
   req.session = null
   res.redirect('/');
 };
+
 /**
  * Sync repositories database with Github
  */
@@ -128,29 +132,4 @@ exports.githubSync = function (req, res) {
 
     res.redirect('/panel?msg=successfully_synced');
   });
-};
-
-/**
- * Active or de-active SourceDoc for a repository
- */
-exports.activeSourceDoc = function (req, res) {
-  if (req.body != null && req.body.github_id != null && req.body.active != null) {
-    Repository.findOneAndUpdate({
-      github_id: req.body.github_id,
-      "owner.id": res.locals.githubUser.id
-    }, {
-      sourcedoc_enable: (req.body.active == "true")
-    }).exec();
-
-    res.writeHead(200);
-    res.end(JSON.stringify({
-      success: true
-    }));
-  } else {
-    res.writeHead(500);
-    res.end(JSON.stringify({
-      success: false,
-      message: __("Can't find required parameters.")
-    }));
-  }
 };

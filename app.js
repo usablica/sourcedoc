@@ -30,6 +30,7 @@ var indexRoute = require('./routes/index'),
     userRoute = require('./routes/user'),
     githubRoute = require('./routes/github'),
     documentRoute = require('./routes/document'),
+    repositoryRoute = require('./routes/repository'),
     app = express();
 
 //Global variables
@@ -77,9 +78,11 @@ app.get('/panel', userRoute.panel);
 //Logout from account
 app.get('/logout', userRoute.logout);
 //Active/de-active SourceDoc for repository
-app.post('/active_sourcedoc', userRoute.activeSourceDoc);
+app.post('/active_sourcedoc', repositoryRoute.activeSourceDoc);
 //Receive and process Github Post-Receive hooks
 app.post('/github_hook', githubRoute.githubHook);
+//All repository revisions
+app.get('/:username/:repo/all', repositoryRoute.getAllRevisions);
 //Documents route
 app.get('/:username/:repo/:revision?/*', documentRoute.getDocument);
 

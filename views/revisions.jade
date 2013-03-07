@@ -1,0 +1,71 @@
+extends layout
+include mixins/message
+
+block content
+  #main
+
+    //
+      |page content
+      
+    #content
+      .part-title
+        h1= __("Revisions")
+      table
+        tbody
+          tr
+            td
+              b
+                =__('Repository') + ": "
+              a(href=repository.html_url, target="_blank")
+                =repository.name
+            td
+              b
+                =__('Owner') + ": "
+              a(href="http://github.com/" + repository.owner.username, target="_blank")
+                =repository.owner.username
+            td
+              b
+                =__('Language') + ": "
+              span(class="lang", style="background-color: " + language_colors[repository.language] + ";", class="language-label")= repository.language != null ? repository.language : __("Unknown")
+            td
+              b
+                =__('Fork') + ": "
+              span(class=repository.is_fork ? "icon-ok" : "icon-remove")
+            td
+              b
+                =__('Homepage') + ": "
+              if (repository.homepage != null)
+                a(href=repository.homepage, target="_blank")
+                  span(class="icon-globe")
+              else
+                span(class="icon-remove", title=__("No"))
+      
+      if revisions.length > 0
+        table
+          thead
+            tr
+              th= __("Revision")
+              th= __("Commiter")
+              th= __("Date")
+              th= __("Status")
+              th= __("Description")
+          tbody
+            each item, i in revisions
+              tr
+                td
+                  a(href=item.revision + "/", target="_blank")
+                    =item.revision
+                td
+                  a(href=item.commit.url)
+                    =item.commit.committer.name
+                td
+                  =moment(item.commit.timestamp).fromNow()
+                td
+                  span(class=item.success ? "icon-ok" : (item.in_progress ? "icon-refresh" : "icon-remove"))
+                  span(class="revision-number " + (item.success ? "revision-success" : (item.in_progress ? "revision-warning" : "revision-error")))
+                    =item.success ? __("Success") : (item.in_progress ? __("In progress...") : __("Error"))
+                td
+                  =item.status.substr(0, 50)
+                
+      else 
+        p.text-error #{__('No revision found for this repository.')} 

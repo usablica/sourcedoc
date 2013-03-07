@@ -1,5 +1,5 @@
 /**
- * Github
+ * Github Controller
  */
 var http = require("http"),
   Url = require("url"),

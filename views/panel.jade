@@ -16,11 +16,11 @@ block content
         h1= __("Manage Repositories")
       .sync
         span#sync-msg
-          = __("Last sync with github:") + " "
+          = __("Last sync:") + " "
           span#sync-time
             if last_github_sync != null
               b
-                = last_github_sync
+                = moment(last_github_sync).fromNow()
             else
               b
                 = __("Never.")
@@ -45,8 +45,15 @@ block content
                   span(class="lang", style="background-color: " + language_colors[item.language] + ";", class="language-label")= item.language != null ? item.language : __("Unknown")
                 td
                   span(class=(repoRevisions[item.github_id].in_progess ? "icon-refresh" : (repoRevisions[item.github_id].success ? "icon-ok" : (repoRevisions[item.github_id].revision == 0 ? "icon-warning-sign" : "icon-remove"))))
-                  span(class="revision-number " + (repoRevisions[item.github_id].in_progess ? "revision-warning" : (repoRevisions[item.github_id].success ? "revision-success" : (repoRevisions[item.github_id].revision == 0 ? "revision-warning" : "revision-error"))))
-                    =repoRevisions[item.github_id].revision
+                  if (repoRevisions[item.github_id].success) 
+                    a(class="revision-number revision-success", href="/" + item.owner.username + "/" + item.name + "/" + repoRevisions[item.github_id].revision + "/")
+                      =repoRevisions[item.github_id].revision
+                  else if (repoRevisions[item.github_id].in_progress || repoRevisions[item.github_id].revision == 0)
+                    span(class="revision-number revision-warning")
+                      =repoRevisions[item.github_id].revision
+                  else
+                    span(class="revision-number revision-error")
+                      =repoRevisions[item.github_id].revision
                 td
                   span(class=item.is_fork ? "icon-ok" : "icon-remove")
                 td

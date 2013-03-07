@@ -125,7 +125,7 @@ body {
     }
 
     #panel > ul > li:hover {
-        background-color: rgb(254, 248, 153);
+        background-color: rgba(247,247,247,1);
     }
 
     #panel > ul > li:active {
@@ -418,6 +418,10 @@ body {
     
     .icon-warning-sign {
       background-position: -144px -120px;
+    }
+    
+    .icon-globe {
+      background-position: -336px -144px;
     }
     
 }
