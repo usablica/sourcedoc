@@ -53,8 +53,11 @@ block content
             each item, i in revisions
               tr
                 td
-                  a(href=item.revision + "/", target="_blank")
-                    =item.revision
+                  if(item.success)
+                    a(href="/" + repository.owner.username + "/" + repository.name + "/" + item.revision + "/", target="_blank")
+                      =item.revision
+                  else
+                      =item.revision
                 td
                   a(href=item.commit.url)
                     =item.commit.committer.name

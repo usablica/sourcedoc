@@ -25,7 +25,8 @@ html
 
   body
     header
-      #logo
+      a(href="/")
+        #logo
       ul#info
         if isAuthenticated
           li#profile-pic
@@ -36,13 +37,13 @@ html
           li
             a(href='/logout') #{__('disconnect')}
         else
-          li
+          li(style="margin-top: 7px;")
             a(href='/github_auth') #{__('Connect with Github')}
     #panel
       h2#panel-title= __('menu')
       ul
-        li.selected
-          a(href='#')= __('Home')
+        li(class=(page_name == 'panel' ? 'selected' : ''))
+          a(href='/panel')= __('Panel')
         li
           a(href='#about')= __('About')
         li
@@ -51,10 +52,10 @@ html
     block content
 
     footer
-      | with <3 in 
+      ="v" + version + " "
+      | - with <3 in 
       a(href='http://usabli.ca')
         | usabli.ca
-
     //
       |javascript (Placed at the end of the document so the pages load faster)
 

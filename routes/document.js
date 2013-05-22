@@ -37,6 +37,7 @@ exports.getDocument = function (req, res) {
           }
           //I used `send` module to map the docs folder with the given url and parameters.
           //I'm not sure can I do this job with Express itself or not, so I used `send` module for now.
+          console.log((revision != null ? "" : lastRevisionDoc.revision));
           send(req, req._parsedUrl.pathname + (revision != null ? "" : lastRevisionDoc.revision))
             .root(path.join(__dirname, "../docs"))
             .on("error", function (err) {

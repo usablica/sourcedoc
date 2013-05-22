@@ -36,7 +36,8 @@ var indexRoute = require('./routes/index'),
 //Global variables
 app.locals({
   __: i18n.__,
-  __n: i18n.__n
+  __n: i18n.__n,
+  version: "0.1.0"
 });
 //set an global variable to hold all SourceDoc configs and use it in all parts of application
 GLOBAL.systemConfig = require(__dirname + '/config.js').systemConfigs;
@@ -45,10 +46,12 @@ GLOBAL.systemConfig = require(__dirname + '/config.js').systemConfigs;
 mongoose.connect(systemConfig.mongoDbConnection);
 
 app.configure(function() {
+  //enable reverse proxy
+  app.enable('trust proxy');
   app.set('port', process.env.PORT || 3000);
   app.set('views', __dirname + '/views');
   app.set('view engine', 'jade');
-  app.use(express.favicon());
+  app.use(express.favicon(__dirname + '/public/img/favicon.ico'));
   app.use(express.logger('dev'));
   app.use(express.bodyParser());
   app.use(express.methodOverride());

@@ -68,5 +68,7 @@
 	"No revision found for this repository.": "No revision found for this repository.",
 	"An internal problem occurred while loading repository revisions, please try again.": "An internal problem occurred while loading repository revisions, please try again.",
 	"Date": "Date",
-	"Last sync:": "Last sync:"
+	"Last sync:": "Last sync:",
+	"All Revisions": "All Revisions",
+	"Panel": "Panel"
 }
