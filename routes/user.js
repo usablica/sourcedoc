@@ -35,6 +35,18 @@ exports.panel = function (req, res) {
         return;
       }
 
+      if(repos.length < 1) {
+        res.render('panel', {
+          title: __('User Panel'),
+          msg: msg,
+          page_name: "panel",
+          moment: require("moment"),
+          repos: [],
+          last_github_sync: user[0].last_github_sync,
+        });
+        return;
+      }
+
       //To collect repositories revision
       var repoRevisions = {};
 
@@ -88,7 +100,7 @@ exports.panel = function (req, res) {
  */
 exports.logout = function (req, res) {
   //remove the github token from user's browser
-  req.session = null
+  req.session.destroy();
   res.redirect('/');
 };
 
@@ -100,11 +112,14 @@ exports.githubSync = function (req, res) {
     type: "oauth",
     token: res.locals.githubUser.accessToken
   });
-  github.repos.getFromUser({
+  github.repos.getAll({
     user: res.locals.githubUser.login
   }, function (err, repoObj) {
+
+
     for (var i = 0, arrLen = repoObj.length; i < arrLen; i++) {
       var objItem = repoObj[i];
+      console.log(repoObj[i].name);
       new Repository({
         github_id: objItem.id,
         owner: {

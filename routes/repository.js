@@ -63,7 +63,7 @@ exports.getAllRevisions = function (req, res) {
           }
           res.render('revisions', {
             title: __('Repository revisions'),
-            page_name: "panel",
+            page_name: "revisions",
             revisions: revisions,
             moment: require("moment"),
             repository: repo,
