@@ -112,11 +112,14 @@ exports.githubSync = function (req, res) {
     type: "oauth",
     token: res.locals.githubUser.accessToken
   });
-  github.repos.getFromUser({
+  github.repos.getAll({
     user: res.locals.githubUser.login
   }, function (err, repoObj) {
+
+
     for (var i = 0, arrLen = repoObj.length; i < arrLen; i++) {
       var objItem = repoObj[i];
+      console.log(repoObj[i].name);
       new Repository({
         github_id: objItem.id,
         owner: {
