@@ -75,6 +75,8 @@ app.get('/github_auth_callback', githubRoute.authCallback);
 app.get('/github_sync', userRoute.githubSync);
 //Users panel
 app.get('/panel', userRoute.panel);
+//Users panel with login parameter
+app.get('/panel/:login?', userRoute.panel);
 //Logout from account
 app.get('/logout', userRoute.logout);
 //Active/de-active SourceDoc for repository

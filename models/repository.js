@@ -7,7 +7,7 @@ var RepositorySchema = new Schema({
     github_id: { type: Number, unique: true, index: true },
     owner: {
       id: Number,
-      username: String
+      username: String,
     },
     name: { type: String },
     clone_url: { type: String },

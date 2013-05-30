@@ -39,14 +39,11 @@ html
           li
             a(href='/github_auth') #{__('Connect with Github')}
     #panel
-      h2#panel-title= __('menu')
+      h2#panel-title= __('repository')
       ul
-        li.selected
-          a(href='#')= __('Home')
-        li
-          a(href='#about')= __('About')
-        li
-          a(href='#contact')= __('Contact')
+        each item, i in repoCategories
+          li
+            a(href='/panel/' + item.name)= item.name
 
     block content
 
