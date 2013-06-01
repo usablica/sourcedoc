@@ -13,85 +13,115 @@ var messaging = require("../util/message/core"),
   });
 
 /**
+ * Check that the current user has access to given login name or not
+ */
+function hasAccess(currentUser, loginName, cb) {
+  var returnValue = false;
+  if (currentUser.login == loginName) {
+    returnValue = true;
+  }
+  //check if the given user is an organization
+  UserOrganization.findOne({ username: currentUser.login, orgName: loginName }).exec(function (errUser, user) {
+    if (user != null) {
+      returnValue = true;  
+    }
+    cb(returnValue);
+  });
+}
+
+/**
  * Users main panel
  */
 exports.panel = function (req, res) {
-  var loginName = req.params.login;
+  var loginName = req.params.login || req.session.user.login;
 
-  var msg = {};
-  if (req.query.msg != undefined && req.query.msg != "") {
-    var translated_message = messaging.getMessage(req.query.msg);
-    if (translated_message) msg = translated_message;
-  }
+  //check user athority
+  hasAccess(req.session.user, loginName, function(isAuthorized) {
+    
+    if (!isAuthorized) {
+      //redirect user and show not-authenticated message
+      res.writeHead(303, {
+        Location: "/?msg=auth_required"
+      });
+      res.end();
+      return;
+    }
 
-  User.findOne({ "username": loginName || req.session.user.login }).exec(function (errUser, user) {
-    Repository.find({
-      "owner.id": user.github_id,
-    })
-      .sort('is_fork')
-      .exec(function (errRepo, repos) {
-        if (errRepo || errUser) {
-          res.writeHead(500);
-          res.end(__("Unexpected error while loading your information. Please re-try again."));
-          return;
-        }
+    var msg = {};
+    if (req.query.msg != undefined && req.query.msg != "") {
+      var translated_message = messaging.getMessage(req.query.msg);
+      if (translated_message) msg = translated_message;
+    }
 
-        if(repos.length < 1) {
-          res.render('panel', {
-            title: __('User Panel'),
-            msg: msg,
-            page_name: "panel",
-            moment: require("moment"),
-            repos: [],
-            last_github_sync: user.last_github_sync,
-          });
-          return;
-        }
+    User.findOne({ "username": loginName }).exec(function (errUser, user) {
+      Repository.find({
+        "owner.id": user.github_id,
+      })
+        .sort('is_fork')
+        .exec(function (errRepo, repos) {
+          if (errRepo || errUser) {
+            res.writeHead(500);
+            res.end(__("Unexpected error while loading your information. Please re-try again."));
+            return;
+          }
 
-        //To collect repositories revision
-        var repoRevisions = {};
-
-        for (var i = 0, reposLen = repos.length; i < reposLen; i++) {
-          //Add/Join Revision data to the Repository model
-          (function (currentRepo) {
-            Revision.findOne({
-              "repository.github_id": currentRepo.github_id
-            }).sort('-created_at')
-              .exec(function (errLastRevision, lastRevisionDoc) {
-              if (errLastRevision) {
-                res.writeHead(500);
-                res.end(__("Unexpected error while loading your information. Please re-try again."));
-                return;
-              }
-              if (lastRevisionDoc) {
-                repoRevisions[currentRepo.github_id] = ({
-                  revision: lastRevisionDoc.revision,
-                  success: lastRevisionDoc.success,
-                  in_progress: lastRevisionDoc.in_progress
-                });
-              } else {
-                repoRevisions[currentRepo.github_id] = {
-                  revision: 0,
-                  success: false,
-                  in_progress: false
-                };
-              }
-              //Sorry guys for this condition, I wrote that to know WHEN the Mongoose callback completed to render the page
-              if (Object.keys(repoRevisions).length == repos.length) {
-                res.render('panel', {
-                  title: __('User Panel'),
-                  msg: msg,
-                  page_name: "panel",
-                  moment: require("moment"),
-                  repoRevisions: repoRevisions,
-                  repos: repos,
-                  last_github_sync: user.last_github_sync,
-                  language_colors: require("../util/language_colors.js").language_colors
-                });
-              }
+          if(repos.length < 1) {
+            res.render('panel', {
+              title: __('User Panel'),
+              msg: msg,
+              page_name: "panel",
+              moment: require("moment"),
+              repos: [],
+              last_github_sync: user.last_github_sync,
             });
-          })(repos[i]);
-        }
+            return;
+          }
+
+          //To collect repositories revision
+          var repoRevisions = {};
+
+          for (var i = 0, reposLen = repos.length; i < reposLen; i++) {
+            //Add/Join Revision data to the Repository model
+            (function (currentRepo) {
+              Revision.findOne({
+                "repository.github_id": currentRepo.github_id
+              }).sort('-created_at')
+                .exec(function (errLastRevision, lastRevisionDoc) {
+                if (errLastRevision) {
+                  res.writeHead(500);
+                  res.end(__("Unexpected error while loading your information. Please re-try again."));
+                  return;
+                }
+                if (lastRevisionDoc) {
+                  repoRevisions[currentRepo.github_id] = ({
+                    revision: lastRevisionDoc.revision,
+                    success: lastRevisionDoc.success,
+                    in_progress: lastRevisionDoc.in_progress
+                  });
+                } else {
+                  repoRevisions[currentRepo.github_id] = {
+                    revision: 0,
+                    success: false,
+                    in_progress: false
+                  };
+                }
+                //Sorry guys for this condition, I wrote that to know WHEN the Mongoose callback completed to render the page
+                if (Object.keys(repoRevisions).length == repos.length) {
+                  res.render('panel', {
+                    title: __('User Panel'),
+                    msg: msg,
+                    page_name: "panel",
+                    moment: require("moment"),
+                    repoRevisions: repoRevisions,
+                    repos: repos,
+                    last_github_sync: user.last_github_sync,
+                    language_colors: require("../util/language_colors.js").language_colors
+                  });
+                }
+              });
+            })(repos[i]);
+          }
+      });
     });
   });
 };
