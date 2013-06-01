@@ -17,8 +17,7 @@ var messaging = require("../util/message/core"),
 exports.activeSourceDoc = function (req, res) {
   if (req.body != null && req.body.github_id != null && req.body.active != null) {
     Repository.findOneAndUpdate({
-      github_id: req.body.github_id,
-      "owner.id": res.locals.githubUser.id
+      "github_id": req.body.github_id
     }, {
       sourcedoc_enable: (req.body.active == "true")
     }).exec();

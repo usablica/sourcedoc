@@ -30,10 +30,7 @@ exports.panel = function (req, res) {
     })
       .sort('is_fork')
       .exec(function (errRepo, repos) {
-      User.find({
-        "github_id": req.session.user.id
-      }).exec(function (errUser, user) {
-        if (errRepo || errUser || user.length < 1) {
+        if (errRepo || errUser) {
           res.writeHead(500);
           res.end(__("Unexpected error while loading your information. Please re-try again."));
           return;
@@ -46,7 +43,7 @@ exports.panel = function (req, res) {
             page_name: "panel",
             moment: require("moment"),
             repos: [],
-            last_github_sync: user[0].last_github_sync,
+            last_github_sync: user.last_github_sync,
           });
           return;
         }
@@ -88,14 +85,13 @@ exports.panel = function (req, res) {
                   moment: require("moment"),
                   repoRevisions: repoRevisions,
                   repos: repos,
-                  last_github_sync: user[0].last_github_sync,
+                  last_github_sync: user.last_github_sync,
                   language_colors: require("../util/language_colors.js").language_colors
                 });
               }
             });
           })(repos[i]);
         }
-      });
     });
   });
 };
