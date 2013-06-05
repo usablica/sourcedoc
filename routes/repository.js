@@ -5,6 +5,7 @@ var messaging = require("../util/message/core"),
   github_client = require("github"),
   mongoose = require('mongoose'),
   Repository = mongoose.model('Repository'),
+  UserOrganization = mongoose.model('UserOrganization'),
   Revision = mongoose.model('Revision'),
   User = mongoose.model('User'),
   github = new github_client({
@@ -16,17 +17,31 @@ var messaging = require("../util/message/core"),
  */
 exports.activeSourceDoc = function (req, res) {
   if (req.body != null && req.body.github_id != null && req.body.active != null) {
-    Repository.findOneAndUpdate({
-      github_id: req.body.github_id,
-      "owner.id": res.locals.githubUser.id
-    }, {
-      sourcedoc_enable: (req.body.active == "true")
-    }).exec();
+    var currentUser = req.session.user;
 
-    res.writeHead(200);
-    res.end(JSON.stringify({
-      success: true
-    }));
+    var validUsers = [];
+    //add current user
+    validUsers.push(currentUser.id);
+    UserOrganization.find({ username: currentUser.login }).exec(function (errOrgs, orgs) {
+
+      //add organizations id
+      for (var i = orgs.length - 1; i >= 0; i--) {
+        validUsers.push(orgs[i].orgId);
+      };
+
+      Repository.findOneAndUpdate({
+        "github_id": req.body.github_id,
+        "owner.id": { $in: validUsers }
+      }, {
+        sourcedoc_enable: (req.body.active == "true")
+      }).exec();
+
+      res.writeHead(200);
+      res.end(JSON.stringify({
+        success: true
+      }));
+    });
+
   } else {
     res.writeHead(500);
     res.end(JSON.stringify({

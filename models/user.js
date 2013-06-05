@@ -15,6 +15,7 @@ var UserSchema = new Schema({
     public_repos: { type: Number },
     public_gists: { type: Number },
     last_github_sync: { type: Date },
+    isOrganization: { type: Boolean, default: false },
     created_at: { type: Date, default: Date.now }
 });
 

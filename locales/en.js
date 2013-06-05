@@ -70,5 +70,6 @@
 	"Date": "Date",
 	"Last sync:": "Last sync:",
 	"All Revisions": "All Revisions",
-	"Panel": "Panel"
+	"Panel": "Panel",
+	"repository": "repository"
 }
