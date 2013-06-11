@@ -167,7 +167,7 @@ exports.githubHook = function (req, res) {
                                 commandArgs.push(repositoryPath);
                                 //Make document directory
                                 mkdirp.sync(repositoryPath);
-                                var generateDocCommand = spawn('engineObj.command', commandArgs);
+                                var generateDocCommand = spawn(engineObj.command, commandArgs);
                                 //catch errors
                                 generateDocCommand.stderr.on('data', function (data) {
                                   //append all errors to variable
