@@ -8,6 +8,8 @@ var messaging = require("../util/message/core"),
   UserOrganization = mongoose.model('UserOrganization'),
   Revision = mongoose.model('Revision'),
   User = mongoose.model('User'),
+	log4js = require('log4js'),
+	log4jsMongo = require('log4js-mongodb'),
   github = new github_client({
     version: "3.0.0"
   });
@@ -35,7 +37,7 @@ exports.activeSourceDoc = function (req, res) {
       }, {
         sourcedoc_enable: (req.body.active == "true")
       }).exec();
-
+			
       res.writeHead(200);
       res.end(JSON.stringify({
         success: true
