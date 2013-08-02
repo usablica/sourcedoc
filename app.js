@@ -61,6 +61,13 @@ app.configure(function() {
   app.use(express.static(path.join(__dirname, 'public')));
   //User authentication and more
   app.use(require('./middlewares/authentication.js').authCheck);
+  //this middleware is used to pass current URL to the views and 
+  //active correct menu in navigation bar. I don't know if there's
+  //a better way for doing it
+  app.use(function(req, res, next) {
+    res.locals.url = req.url;
+    next();
+  });
   app.use(app.router);
 });
 

@@ -124,13 +124,16 @@ body {
         padding: 10px 10px;
     }
 
+    #panel > ul > li.active {
+	color: black;
+    }
+
     #panel > ul > li:hover {
         background-color: rgba(247,247,247,1);
     }
 
     #panel > ul > li:active {
         color: #333;
-        font-weight: bold;
     }
 
     #panel > ul > li.selected {
