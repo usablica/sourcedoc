@@ -34,8 +34,16 @@ function hasAccess(currentUser, loginName, cb) {
  */
 exports.panel = function (req, res) {
   var loginName = req.params.login || req.session.user.login;
-
-  //check user athority
+  //check user session
+  if (req.session.user == null) {
+      //redirect user and show not-authenticated message
+      res.writeHead(303, {
+        Location: "/?msg=auth_required"
+      });
+      res.end();
+      return;
+    }
+  //check user authority
   hasAccess(req.session.user, loginName, function(isAuthorized) {
     
     if (!isAuthorized) {

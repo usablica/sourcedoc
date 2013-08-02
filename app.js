@@ -7,7 +7,9 @@ var express = require('express'),
     github_client = require("github"),
     i18n = require("i18n"),
     fs = require('fs'),
-    mongoose = require('mongoose');
+    mongoose = require('mongoose'),
+    MongoStore = require('connect-mongo')(express);
+
 
 var github = new github_client({
     version: "3.0.0"
@@ -45,6 +47,16 @@ GLOBAL.systemConfig = require(__dirname + '/config.js').systemConfigs;
 //DB connection
 mongoose.connect(systemConfig.mongoDbConnection);
 
+var conf = {
+  db: {
+    db: 'sourcedoc',
+    host: '127.0.0.1',
+    port: 27017,  
+    collection: 'sessions' 
+  },
+  secret: '076ee61d63aa10a125ea872411e433b9'
+};
+
 app.configure(function() {
   //enable reverse proxy
   app.enable('trust proxy');
@@ -56,7 +68,12 @@ app.configure(function() {
   app.use(express.bodyParser());
   app.use(express.methodOverride());
   app.use(express.cookieParser());
-  app.use(express.session({ secret: 'sourcedoc', expires: false }));
+  //Save sessions in DB
+  app.use(express.session({
+    secret: conf.secret,
+    maxAge: new Date(Date.now() + 3600000),
+    store: new MongoStore(conf.db)
+  }));
   app.use(i18n.init);
   app.use(express.static(path.join(__dirname, 'public')));
   //User authentication and more
